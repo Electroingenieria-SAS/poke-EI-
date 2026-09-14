@@ -1,31 +1,32 @@
 export const NPCS = [
   {
-    id: 'iria', x: 330, y: 250, tint: 0xf7d36b, name: 'Iria',
+    id: 'iria', x: 326, y: 244, tint: 0xf8d68a, name: 'Iria', role: 'Guardiana del valle',
     dialog: [
-      'El santuario del sur volvió a despertar.',
-      'Activa las tres runas en este orden: SOL, RÍO y RAÍZ.',
-      'Cuando el sello ceda, baja y descubre qué está alterando a las criaturas.'
+      'Algo volvió a moverse bajo el santuario del sur.',
+      'Las marcas antiguas responden en este orden: SOL, RÍO y RAÍZ.',
+      'Hazlas resonar y vuelve a la casa de piedra. Allí comienza el descenso.'
     ]
   },
   {
-    id: 'kael', x: 220, y: 350, tint: 0x8ed8ff, name: 'Kael',
+    id: 'kael', x: 205, y: 350, tint: 0x9fd9ff, name: 'Kael', role: 'Explorador',
     dialog: [
-      'Fuera de los caminos seguros aparecen criaturas salvajes.',
-      'Golpéalas, administra tu stamina y usa Vínculo cuando estén debilitadas.',
-      'Si quieres probar el combate rápido, vuelve a hablar conmigo después de aceptar la misión.'
+      'Las criaturas se están acercando cada vez más al camino.',
+      'Debilítalas, cuida tu stamina y usa Vínculo cuando tengas una oportunidad.',
+      'Si quieres practicar, vuelve conmigo después de hablar con Iria.'
     ]
   }
 ] as const;
 
 export const RUNES = [
-  { id: 'SOL', x: 260, y: 300, glyph: '☀' },
-  { id: 'RÍO', x: 420, y: 255, glyph: '≈' },
-  { id: 'RAÍZ', x: 470, y: 450, glyph: '⌘' }
+  { id: 'SOL', x: 282, y: 469, glyph: '✦' },
+  { id: 'RÍO', x: 107, y: 530, glyph: '≈' },
+  { id: 'RAÍZ', x: 523, y: 438, glyph: '⌘' }
 ] as const;
 
-export const DUNGEON_ENTRANCE = { x: 550, y: 500 };
+export const DUNGEON_ENTRANCE = { x: 414, y: 428 };
 
 export const ENCOUNTER_ZONES = [
-  { x: 165, y: 150, width: 120, height: 110 },
-  { x: 430, y: 315, width: 115, height: 120 }
+  { x: 398, y: 212, width: 110, height: 85 },
+  { x: 465, y: 455, width: 100, height: 90 },
+  { x: 112, y: 390, width: 90, height: 85 }
 ];

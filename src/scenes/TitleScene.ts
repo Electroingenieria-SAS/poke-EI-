@@ -6,16 +6,29 @@ export class TitleScene extends Phaser.Scene {
   constructor() { super('TitleScene'); }
 
   create(): void {
-    this.add.image(VIEW_WIDTH / 2, VIEW_HEIGHT / 2, 'world-map').setDisplaySize(VIEW_WIDTH, VIEW_WIDTH).setTint(0x748874);
-    this.add.rectangle(VIEW_WIDTH / 2, VIEW_HEIGHT / 2, VIEW_WIDTH, VIEW_HEIGHT, 0x06100c, 0.55);
-    this.add.text(VIEW_WIDTH / 2, 160, 'ECHOES OF ALDER', {
-      fontFamily: 'monospace', fontSize: '48px', color: '#f2da7b', fontStyle: 'bold', stroke: '#253621', strokeThickness: 8
-    }).setOrigin(0.5);
-    this.add.text(VIEW_WIDTH / 2, 218, 'Vertical slice · Phaser 3 + Tiled assets', { fontFamily: 'monospace', fontSize: '18px', color: '#dbe6d6' }).setOrigin(0.5);
+    const bg = this.add.image(VIEW_WIDTH / 2, 365, 'world-map').setScale(1.5);
+    this.tweens.add({ targets: bg, y: 350, duration: 9000, yoyo: true, repeat: -1, ease: 'Sine.inOut' });
+    this.add.rectangle(VIEW_WIDTH / 2, VIEW_HEIGHT / 2, VIEW_WIDTH, VIEW_HEIGHT, 0x07100c, 0.42);
+    this.add.rectangle(VIEW_WIDTH / 2, 90, VIEW_WIDTH, 180, 0x07100c, 0.56);
+    this.add.rectangle(VIEW_WIDTH / 2, 475, VIEW_WIDTH, 130, 0x07100c, 0.62);
 
-    const start = this.add.text(VIEW_WIDTH / 2, 330, '[ ENTER ]  CONTINUAR', { fontFamily: 'monospace', fontSize: '24px', color: '#ffffff', backgroundColor: '#18382b', padding: { x: 18, y: 12 } })
-      .setOrigin(0.5).setInteractive({ useHandCursor: true });
-    const reset = this.add.text(VIEW_WIDTH / 2, 392, '[ R ]  NUEVA PARTIDA', { fontFamily: 'monospace', fontSize: '17px', color: '#c7d5ca' }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+    this.add.text(VIEW_WIDTH / 2, 95, 'ECHOES OF ALDER', {
+      fontFamily: 'Georgia, serif', fontSize: '52px', color: '#fff0bd', fontStyle: 'bold',
+      stroke: '#17231b', strokeThickness: 7
+    }).setOrigin(0.5);
+    this.add.text(VIEW_WIDTH / 2, 145, 'A MONSTER-TAMING ADVENTURE', {
+      fontFamily: 'Verdana, sans-serif', fontSize: '12px', color: '#d7e6cf'
+    }).setOrigin(0.5);
+
+    const startBg = this.add.graphics();
+    startBg.fillStyle(0x12281e, 0.94).fillRoundedRect(336, 416, 288, 58, 12);
+    startBg.lineStyle(1, 0xe4ce85, 0.55).strokeRoundedRect(336.5, 416.5, 287, 57, 12);
+    const start = this.add.text(VIEW_WIDTH / 2, 445, 'CONTINUAR  ·  ENTER', {
+      fontFamily: 'Verdana, sans-serif', fontSize: '16px', color: '#fff8df', fontStyle: 'bold'
+    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+    const reset = this.add.text(VIEW_WIDTH / 2, 495, 'R · Nueva partida', {
+      fontFamily: 'Verdana, sans-serif', fontSize: '12px', color: '#d7ddd5'
+    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
     const go = () => this.scene.start('WorldScene');
     start.on('pointerdown', go);

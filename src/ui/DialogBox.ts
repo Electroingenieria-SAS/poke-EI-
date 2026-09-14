@@ -11,12 +11,26 @@ export class DialogBox {
   private onComplete?: () => void;
 
   constructor(private scene: Phaser.Scene) {
-    const bg = scene.add.rectangle(VIEW_WIDTH / 2, VIEW_HEIGHT - 88, VIEW_WIDTH - 48, 142, 0x081510, 0.94)
-      .setStrokeStyle(3, 0xd8c37d);
-    this.nameText = scene.add.text(48, VIEW_HEIGHT - 148, '', { fontFamily: 'monospace', fontSize: '20px', color: '#f8df8f', fontStyle: 'bold' });
-    this.bodyText = scene.add.text(48, VIEW_HEIGHT - 116, '', { fontFamily: 'monospace', fontSize: '18px', color: '#f6f4e8', wordWrap: { width: VIEW_WIDTH - 96 }, lineSpacing: 6 });
-    this.hintText = scene.add.text(VIEW_WIDTH - 58, VIEW_HEIGHT - 40, 'E ▶', { fontFamily: 'monospace', fontSize: '16px', color: '#b7d8c6' }).setOrigin(1, 1);
-    this.container = scene.add.container(0, 0, [bg, this.nameText, this.bodyText, this.hintText]).setDepth(10000).setScrollFactor(0).setVisible(false);
+    const panel = scene.add.graphics();
+    panel.fillStyle(0x08140f, 0.96).fillRoundedRect(36, VIEW_HEIGHT - 154, VIEW_WIDTH - 72, 122, 14);
+    panel.lineStyle(1, 0xe4cf8a, 0.5).strokeRoundedRect(36.5, VIEW_HEIGHT - 153.5, VIEW_WIDTH - 73, 121, 14);
+    panel.fillStyle(0xe4cf8a, 0.85).fillRoundedRect(36, VIEW_HEIGHT - 154, 7, 122, { tl: 14, bl: 14, tr: 0, br: 0 });
+
+    this.nameText = scene.add.text(60, VIEW_HEIGHT - 137, '', {
+      fontFamily: 'Verdana, sans-serif', fontSize: '12px', color: '#e8cf87', fontStyle: 'bold'
+    });
+    this.bodyText = scene.add.text(60, VIEW_HEIGHT - 109, '', {
+      fontFamily: 'Verdana, sans-serif', fontSize: '16px', color: '#fffaf0',
+      wordWrap: { width: VIEW_WIDTH - 132 }, lineSpacing: 5
+    });
+    this.hintText = scene.add.text(VIEW_WIDTH - 60, VIEW_HEIGHT - 49, 'E  CONTINUAR', {
+      fontFamily: 'Verdana, sans-serif', fontSize: '10px', color: '#bcd0bf'
+    }).setOrigin(1, 1);
+
+    this.container = scene.add.container(0, 0, [panel, this.nameText, this.bodyText, this.hintText])
+      .setDepth(10000)
+      .setScrollFactor(0)
+      .setVisible(false);
   }
 
   get active(): boolean { return this.container.visible; }
@@ -25,9 +39,10 @@ export class DialogBox {
     this.lines = lines;
     this.index = 0;
     this.onComplete = onComplete;
-    this.nameText.setText(name);
+    this.nameText.setText(name.toUpperCase());
     this.bodyText.setText(this.lines[0] ?? '');
-    this.container.setVisible(true);
+    this.container.setVisible(true).setAlpha(0);
+    this.scene.tweens.add({ targets: this.container, alpha: 1, duration: 140 });
   }
 
   advance(): void {
