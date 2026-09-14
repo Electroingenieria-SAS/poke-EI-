@@ -10,7 +10,7 @@ export class PlayerController {
 
   constructor(private scene: Phaser.Scene, x: number, y: number) {
     this.sprite = scene.physics.add.sprite(x, y, 'player-walk', 0).setScale(2).setOrigin(0.5, 0.78);
-    this.sprite.body.setSize(16, 12).setOffset(8, 33);
+    (this.sprite.body as Phaser.Physics.Arcade.Body).setSize(16, 12).setOffset(8, 33);
     this.sprite.setCollideWorldBounds(true);
     this.cursors = scene.input.keyboard!.createCursorKeys();
     this.keys = scene.input.keyboard!.addKeys('W,A,S,D') as Record<'W'|'A'|'S'|'D', Phaser.Input.Keyboard.Key>;

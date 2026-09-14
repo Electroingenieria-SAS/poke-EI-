@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { MAP_SIZE, VIEW_HEIGHT, VIEW_WIDTH, WORLD_SCALE, WORLD_SIZE } from '../config/constants';
+import { MAP_SIZE, WORLD_SCALE, WORLD_SIZE } from '../config/constants';
 import { objectAssetKey } from '../data/objectAssets';
 import { DUNGEON_ENTRANCE, ENCOUNTER_ZONES, NPCS, RUNES } from '../data/world';
 import { WORLD_ENCOUNTERS } from '../data/creatures';
@@ -92,7 +92,7 @@ export class WorldScene extends Phaser.Scene {
 
   private ensureSolidTexture(): void {
     if (this.textures.exists('solid')) return;
-    const g = this.make.graphics({ x: 0, y: 0, add: false });
+    const g = this.add.graphics().setVisible(false);
     g.fillStyle(0xffffff).fillRect(0, 0, 2, 2).generateTexture('solid', 2, 2);
     g.destroy();
   }
