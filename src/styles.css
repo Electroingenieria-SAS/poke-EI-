@@ -1,0 +1,10 @@
+html, body, #app {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #07110d;
+}
+body { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+#game { width: 100%; height: 100%; display: grid; place-items: center; }
+canvas { image-rendering: pixelated; image-rendering: crisp-edges; }

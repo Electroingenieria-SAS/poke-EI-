@@ -1,115 +1,88 @@
-# Echoes of Alder — Phaser RPG vertical slice
+# Poke-EI — Phaser RPG vertical slice
 
-A structured Phaser 3 + TypeScript RPG prototype built around the user-provided **The Fan-tasy Tileset (Free) 1.5.7** assets. The goal is a Pokémon-style exploration loop without copying proprietary Pokémon code or assets: top-down exploration, NPC interaction, quest state, random encounters, turn-based combat, capture/vínculo, XP/levels, puzzles and a dungeon boss.
+Vertical slice de un RPG 2D de exploración y captura de criaturas, construido con **Phaser 3.90**, **TypeScript** y **Vite**. La arquitectura separa escenas, estado, entidades, UI, combate y datos de mundo para poder crecer hacia rutas, pueblos, interiores, mazmorras, entrenadores, inventario y un bestiario propio.
 
-## What is actually implemented
+## Qué incluye
 
-- Original `Beginning Fields` map rendered at 2× pixel scale.
-- Player idle/walk animation in four directions from the supplied character sheets.
-- Tiled-derived collision data. The current generated data contains **529** collision rectangles sourced from the `.tmx/.tsx` collider definitions.
-- **169** Tiled world objects read from the supplied map. Houses, trees, rocks, props and campfires are re-instantiated as depth-sorted sprites so the player can visually pass in front of or behind scenery.
-- NPC dialogue and quest state.
-- Rune puzzle: **SOL → RÍO → RAÍZ**.
-- Route encounter zones and random encounters while walking.
-- Turn-based battle with HP, stamina, basic attack, technique, recovery, capture/vínculo, escape and simple enemy AI.
-- Player XP/level progression and up to six unique captured creatures.
-- Separate sanctuary/dungeon scene with a second sequence puzzle and a boss encounter.
-- `localStorage` save state.
-- `F2` collision overlay in the overworld for auditing.
-- GitHub Pages workflow included.
+- Mundo inicial basado en `Beginning Fields`.
+- 529 zonas de colisión generadas desde los colliders de Tiled.
+- 169 objetos de mundo con profundidad por coordenada Y.
+- Personaje con movimiento top-down y animaciones idle/walk.
+- NPCs, diálogos y misión inicial.
+- Puzzle de runas `SOL → RÍO → RAÍZ`.
+- Zonas de encuentros aleatorios.
+- Combate por turnos con HP y stamina.
+- Captura/vínculo, experiencia y niveles.
+- Escena de santuario/mazmorra, segundo puzzle y jefe.
+- Persistencia local mediante `localStorage`.
+- `F2` para mostrar/ocultar colliders durante auditoría.
 
-> The supplied pack does not contain dedicated monster sprites. The current creatures deliberately use pack elements (bush, rock and campfire) as **placeholder combat art**. The battle architecture is data-driven so replacing them with a real bestiary later does not require rewriting the battle engine.
+## Assets requeridos
 
-## Controls
+Este repositorio **no redistribuye** los archivos gráficos de The Fan-tasy Tileset. Debes tener una copia obtenida legalmente de la versión gratuita 1.5.7 o compatible.
 
-| Action | Key |
-|---|---|
-| Move | WASD / arrow keys |
-| Interact / advance dialogue | E |
-| Practice battle near Kael | B |
-| Toggle collision debug | F2 |
-| Battle actions | 1–5 or mouse |
+Instálala localmente con:
 
-## Run locally
+```bash
+python tools/install_assets.py "C:/ruta/The Fan-tasy Tileset (Free) 1.5.7.zip"
+```
 
-Requirements: Node.js 20+ (22 recommended).
+El comando crea `public/assets/fantasy/` y regenera automáticamente `public/data/` desde el mapa Tiled. Ambos resultados son derivados locales y están excluidos del control de versiones.
+
+Fuente/licencia oficial: https://ventilatore.itch.io/the-fan-tasy-tileset
+
+## Ejecutar
+
+Requisitos recomendados: Node.js 20+ y Python 3.10+.
 
 ```bash
 npm install
+python tools/install_assets.py "/ruta/al/tileset.zip"
 npm run dev
 ```
 
-Open the Vite URL shown in the terminal, normally `http://localhost:5173`.
+Abre la URL que muestre Vite, normalmente `http://localhost:5173`.
 
-Production check:
+## Build
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Repository sanity check:
+El build genera `dist/`. Para una publicación web real, el host también debe disponer de los assets bajo `public/assets/fantasy/`; no se publican automáticamente desde este repositorio.
 
-```bash
-python tools/validate_repo.py
-```
-
-
-## Upload to GitHub
-
-1. Create an empty GitHub repository.
-2. Upload the contents of this folder (do not upload the outer ZIP as the only repository file).
-3. Commit/push to `main`.
-4. In **Settings → Pages**, choose **GitHub Actions** as the source if GitHub does not select it automatically.
-5. The included `.github/workflows/deploy-pages.yml` installs dependencies, validates TypeScript, builds Vite and publishes `dist/`.
-
-Because `vite.config.ts` uses `base: './'`, the same build works from a project subpath on GitHub Pages.
-
-## Project layout
+## Estructura
 
 ```text
 src/
-  config/        paths and world constants
-  data/          creatures, NPCs, encounters and object asset registry
-  entities/      player movement/controller
-  scenes/        boot, title, overworld, battle and dungeon
-  state/         persistent game state
-  systems/       battle formulas
-  ui/            dialogue and HUD
+  config/      rutas de assets y constantes
+  data/        criaturas, mundo y catálogo de objetos
+  entities/    controlador del jugador
+  scenes/      Boot, Title, World, Battle y Dungeon
+  state/       estado persistente
+  systems/     reglas de combate
+  ui/          HUD y diálogos
 public/
-  assets/fantasy original supplied art + Tiled sources
-  data/          generated collision/object metadata
+  data/        generado automáticamente desde Tiled
+  assets/      assets locales ignorados por Git
 tools/
+  install_assets.py
   generate_world_data.py
-.github/workflows/
-  deploy-pages.yml
+  validate_repo.py
 ```
 
-## Editing the Tiled map
+## Controles
 
-The source is kept at:
+- `WASD` / flechas: mover.
+- `E`: interactuar/confirmar.
+- `F2`: depurar colisiones.
+- Combate: interfaz y teclas indicadas en pantalla.
 
-`public/assets/fantasy/Tiled/Tilemaps/Beginning Fields.tmx`
+## Próximos pasos de producción
 
-After editing the map or its TSX collision shapes, regenerate the Phaser metadata:
+El pack gratuito no incluye un bestiario dedicado, por lo que las criaturas actuales son placeholders de gameplay. La siguiente fase debe incorporar arte propio o con licencia redistribuible para criaturas, UI final, efectos, audio, tiles adicionales e interiores.
 
-```bash
-python tools/generate_world_data.py
-```
+## Licencias
 
-The script uses only Python's standard library and rewrites:
-
-- `public/data/beginning-fields-collisions.json`
-- `public/data/beginning-fields-objects.json`
-
-If you add a **new image asset** to the Tiled object layer, also register/preload that image in `src/data/objectAssets.ts` or regenerate that registry as part of your content pipeline.
-
-## Architecture notes
-
-The prototype intentionally keeps content data separate from scene logic. Creature stats live in `src/data/creatures.ts`; NPCs, runes and route zones live in `src/data/world.ts`; persistent flags live in `GameState`; battle math lives in `BattleEngine`. This makes it practical to add more maps, quests, moves, status effects and creatures without turning scenes into monolithic files.
-
-For a production game, the next engineering steps should be: a proper map-export pipeline from Tiled, typed quest/event scripting, multiple party members in battle, move definitions/status effects, inventory/items, audio manager, save slots, scene transitions, controller/mobile input, and dedicated creature/NPC art.
-
-## Third-party assets
-
-See `LICENSE_NOTES.md` and the original PDF documentation in `public/assets/fantasy/` before publishing or redistributing the asset pack.
+El código de este repositorio es trabajo del proyecto. Los assets de terceros conservan sus propias condiciones y no se incluyen aquí. Consulta `LICENSE_NOTES.md`.

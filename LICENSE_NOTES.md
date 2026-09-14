@@ -1,7 +1,15 @@
-# Asset licensing notes
+# Licencia y assets de terceros
 
-The repository contains the user-provided **The Fan-tasy Tileset (Free) 1.5.7** package under `public/assets/fantasy/`.
+Este repositorio contiene el código fuente del prototipo **Poke-EI / Echoes of Alder**.
 
-The original documentation and Free Trial Guide are preserved in that folder. Those files remain the authoritative source for attribution, redistribution, modification and commercial-use terms of the art assets. This repository does not replace or expand the asset author's license.
+Los gráficos de **The Fan-tasy Tileset (Free)** no se incluyen en este repositorio. La licencia publicada por su autor permite usar y modificar la versión gratuita en proyectos no comerciales, pero prohíbe revender o redistribuir los assets, incluso modificados.
 
-The game code written for this prototype is separate from the third-party art package. Before publishing the repository publicly or commercializing a derivative game, review the original asset terms and remove any files whose redistribution is not permitted.
+Fuente oficial: https://ventilatore.itch.io/the-fan-tasy-tileset
+
+Para desarrollar localmente, descarga u obtiene legalmente el paquete por tu cuenta y ejecuta:
+
+```bash
+python tools/install_assets.py "/ruta/The Fan-tasy Tileset (Free) 1.5.7.zip"
+```
+
+El instalador únicamente copia tu archivo local a `public/assets/fantasy/`; esa carpeta está ignorada por Git.
