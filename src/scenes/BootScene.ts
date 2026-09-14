@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { RUNTIME_ASSETS } from '../runtime/runtimeAssets';
 import { gameState } from '../state/GameState';
+import { PLAYER_ANIMATION_ROWS, frameRange } from '../data/playerAnimations';
 
 export class BootScene extends Phaser.Scene {
   constructor() { super('BootScene'); }
@@ -77,18 +78,24 @@ export class BootScene extends Phaser.Scene {
   }
 
   private createAnimations(): void {
-    const make = (key: string, tex: string, start: number, end: number, frameRate: number, repeat = -1) => {
-      if (!this.anims.exists(key)) {
-        this.anims.create({ key, frames: this.anims.generateFrameNumbers(tex, { start, end }), frameRate, repeat });
-      }
+    const make = (key: string, tex: string, row: number, frameRate: number, repeat = -1) => {
+      if (this.anims.exists(key)) return;
+      const { start, end } = frameRange(row);
+      this.anims.create({
+        key,
+        frames: this.anims.generateFrameNumbers(tex, { start, end }),
+        frameRate,
+        repeat,
+      });
     };
-    make('walk-right', 'player-walk', 0, 4, 9);
-    make('walk-left', 'player-walk', 5, 9, 9);
-    make('walk-up', 'player-walk', 10, 14, 9);
-    make('walk-down', 'player-walk', 15, 19, 9);
-    make('idle-right', 'player-idle', 0, 4, 5);
-    make('idle-left', 'player-idle', 5, 9, 5);
-    make('idle-up', 'player-idle', 10, 14, 5);
-    make('idle-down', 'player-idle', 15, 19, 5);
+
+    make('walk-left', 'player-walk', PLAYER_ANIMATION_ROWS.left, 9);
+    make('walk-right', 'player-walk', PLAYER_ANIMATION_ROWS.right, 9);
+    make('walk-up', 'player-walk', PLAYER_ANIMATION_ROWS.up, 9);
+    make('walk-down', 'player-walk', PLAYER_ANIMATION_ROWS.down, 9);
+    make('idle-left', 'player-idle', PLAYER_ANIMATION_ROWS.left, 5);
+    make('idle-right', 'player-idle', PLAYER_ANIMATION_ROWS.right, 5);
+    make('idle-up', 'player-idle', PLAYER_ANIMATION_ROWS.up, 5);
+    make('idle-down', 'player-idle', PLAYER_ANIMATION_ROWS.down, 5);
   }
 }
