@@ -1,13 +1,15 @@
 {
   "name": "echoes-of-alder-phaser-rpg",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "qa:assets": "node tools/validate-runtime-assets.mjs",
+    "qa": "npm run qa:assets && npm run check && npm run build"
   },
   "dependencies": {
     "phaser": "3.90.0"

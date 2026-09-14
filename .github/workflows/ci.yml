@@ -2,7 +2,7 @@ name: Code checks
 
 on:
   push:
-    branches: [main]
+    branches: [main, audit/rebuild-v1]
   pull_request:
     branches: [main]
 
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  typecheck:
+  qa:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,4 +18,6 @@ jobs:
         with:
           node-version: 24
       - run: npm install
+      - run: npm run qa:assets
       - run: npm run check
+      - run: npm run build
